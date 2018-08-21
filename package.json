@@ -1,0 +1,27 @@
+{
+  "name": "image_labeler",
+  "version": "1.0.0",
+  "description": "a utility for generating VOX image annotations",
+  "main": "image_labeler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sam0x17/image_labeler.git"
+  },
+  "keywords": [
+    "deep",
+    "learning",
+    "images",
+    "labeling",
+    "annotations",
+    "vox"
+  ],
+  "author": "Sam Johnson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sam0x17/image_labeler/issues"
+  },
+  "homepage": "https://github.com/sam0x17/image_labeler#readme"
+}
