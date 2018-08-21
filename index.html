@@ -24,8 +24,7 @@
     </style>
   </head>
   <body>
-    <p>Select an image:</p>
-    <input type="file" id="image_file" name="image_file">
+    <button id="save_button">save</button> &nbsp;<input type="file" id="image_file" name="image_file">
     <br>
     <br>
     <img id="dest_image">
@@ -34,6 +33,7 @@
   </body>
   <script>
     $('#cursor').resizable().draggable();
+
     $('#image_file').change(function() {
       var input = document.getElementById('image_file');
       if(input.files.length == 0) return;
@@ -43,6 +43,17 @@
         $('#dest_image').attr('src', e.target.result);
       };
       reader.readAsDataURL(input.files[0]);
+    });
+
+    $('#save_button').click(function() {
+      var cursor_pos = $('#cursor').position();
+      var image_pos = $('#dest_image').position();
+      var cursor_x = cursor_pos.left - image_pos.left;
+      var cursor_y = cursor_pos.top - image_pos.top;
+      var cursor_w = $('#cursor').width();
+      var cursor_h = $('#cursor').height();
+      var pos = {x: cursor_x, y: cursor_y, width: cursor_w, height: cursor_h};
+      console.log(pos);
     });
 
     document.onkeydown = function(e) {
