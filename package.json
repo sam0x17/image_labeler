@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/sam0x17/image_labeler/issues"
   },
-  "homepage": "https://github.com/sam0x17/image_labeler#readme"
+  "homepage": "https://github.com/sam0x17/image_labeler#readme",
+  "dependencies": {
+    "sharp": "^0.20.6"
+  }
 }
