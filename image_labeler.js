@@ -1,12 +1,16 @@
 const sharp = require('sharp');
 const fs = require('fs');
-const http = require('http');
+const path = require('path');
+const express = require('express');
 
-const index = fs.readFileSync('./index.html');
+const app = express();
 
-console.log('started server at localhost:8080');
+function resolvePath(file) {
+  return path.join(__dirname, file);
+}
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.end(index);
-}).listen(8080);
+app.get('/', (req, res) => {
+  res.sendFile(resolvePath('index.html'));
+});
+
+app.listen(8080, () => console.log('server listening at localhost:8080'));
