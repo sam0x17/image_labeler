@@ -1,8 +1,27 @@
 <html>
   <head>
     <title>VOX Image Labeler</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+      crossorigin="anonymous">
+    </script>
   </head>
   <body>
-    <h1>hello world</h1>
+    <p>Select an image:</p>
+    <input type="file" id="image_file" name="image_file">
+    <br>
+    <img id="dest_image">
   </body>
+  <script>
+    $('#image_file').change(function() {
+      var input = document.getElementById('image_file');
+      if(input.files.length == 0) return;
+      console.log(input.files[0]);
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#dest_image').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    });
+  </script>
 </html>
