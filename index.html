@@ -29,7 +29,7 @@
     <br>
     <br>
     <img id="dest_image">
-    <div id="cursor" class="ui-resizable" style="background-color: rgba(255, 0, 0, 0.1); border: 1px solid red; width: 200px; height: 200px; z-index: 1;">
+    <div id="cursor" class="ui-resizable" style="position: absolute; background-color: rgba(255, 0, 0, 0.1); border: 1px solid red; width: 200px; height: 200px; z-index: 1;">
     </div>
   </body>
   <script>
@@ -44,5 +44,30 @@
       };
       reader.readAsDataURL(input.files[0]);
     });
+
+    document.onkeydown = function(e) {
+      e = e || window.event;
+      e.preventDefault();
+      if(e.keyCode == '38') {
+        // up arrow
+        var existing = parseInt($('#cursor').css('top').replace('px', ''));
+        $('#cursor').css('top', existing - 1 + 'px');
+      }
+      else if(e.keyCode == '40') {
+        // down arrow
+        var existing = parseInt($('#cursor').css('top').replace('px', ''));
+        $('#cursor').css('top', existing + 1 + 'px');
+      }
+      else if(e.keyCode == '37') {
+        // left arrow
+        var existing = parseInt($('#cursor').css('left').replace('px', ''));
+        $('#cursor').css('left', existing - 1 + 'px');
+      }
+      else if (e.keyCode == '39') {
+        // right arrow
+        var existing = parseInt($('#cursor').css('left').replace('px', ''));
+        $('#cursor').css('left', existing + 1 + 'px');
+      }
+    }
   </script>
 </html>
