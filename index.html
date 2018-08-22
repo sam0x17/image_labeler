@@ -45,6 +45,10 @@
         $('#current_name').html(current_file);
         if(!current_file) return;
         $('#dest_image').attr('src', current_file);
+        $('#cursor').width(200);
+        $('#cursor').height(200);
+        $('#cursor').attr('left', '0px');
+        $('#cursor').attr('top', '0px');
         setTimeout(function() {
           klass = window.prompt('Please enter the object class for this sample');
         }, 1000);

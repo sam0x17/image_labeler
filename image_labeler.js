@@ -77,7 +77,7 @@ app.get('/save', (req, res) => {
     voc = voc.replace('{{y2}}', h + y);
     voc = voc.replace('{{image_width}}', info.width);
     voc = voc.replace('{{image_height}}', info.height);
-    voc = voc.replace('{{filename}}', filename);
+    voc = voc.replace('{{filename}}', dest_path.replace('./output/images/', ''));
     voc = voc.replace('{{class}}', klass);
     fs.writeFileSync(annotation_filename(sample_num), voc);
     res.status(200).send('OK');
