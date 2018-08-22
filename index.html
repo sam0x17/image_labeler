@@ -50,6 +50,7 @@
         $('#cursor').attr('left', '0px');
         $('#cursor').attr('top', '0px');
         setTimeout(function() {
+          if(!klass)
           klass = window.prompt('Please enter the object class for this sample');
         }, 1000);
       }
