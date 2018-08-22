@@ -24,7 +24,7 @@
     </style>
   </head>
   <body>
-    <button id="next_button">next</button> &nbsp;<input type="file" id="image_file" name="image_file" multiple>
+    <button id="next_button">next</button> <span id="current_name"></span>
     <br>
     <br>
     <img id="dest_image">
@@ -34,17 +34,8 @@
   <script>
     $('#cursor').resizable().draggable();
 
-    var files = new Array();
+    var files = JSON.parse('{{files}}');
     var current_file = null;
-
-    $('#image_file').change(function() {
-      var input = document.getElementById('image_file');
-      if(input.files.length == 0) return;
-      console.log(input.files[0]);
-      for(var i = 0; i < input.files.length; i++) {
-        files.push(input.files[i]);
-      }
-    });
 
     $('#next_button').click(function() {
       if(current_file != null) {
@@ -59,12 +50,9 @@
       }
       current_file = files.pop();
       $('#dest_image').attr('src', '');
+      $('#current_name').html(current_file);
       if(!current_file) return;
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        $('#dest_image').attr('src', e.target.result);
-      };
-      reader.readAsDataURL(current_file);
+      $('#dest_image').attr('src', current_file);
     });
 
     document.onkeydown = function(e) {
