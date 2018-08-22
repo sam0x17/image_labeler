@@ -24,7 +24,7 @@
     </style>
   </head>
   <body>
-    <button id="save_button">save</button> &nbsp;<input type="file" id="image_file" name="image_file">
+    <button id="next_button">next</button> &nbsp;<input type="file" id="image_file" name="image_file" multiple>
     <br>
     <br>
     <img id="dest_image">
@@ -34,26 +34,37 @@
   <script>
     $('#cursor').resizable().draggable();
 
+    var files = new Array();
+    var current_file = null;
+
     $('#image_file').change(function() {
       var input = document.getElementById('image_file');
       if(input.files.length == 0) return;
       console.log(input.files[0]);
+      for(var i = 0; i < input.files.length; i++) {
+        files.push(input.files[i]);
+      }
+    });
+
+    $('#next_button').click(function() {
+      if(current_file != null) {
+        var cursor_pos = $('#cursor').position();
+        var image_pos = $('#dest_image').position();
+        var cursor_x = cursor_pos.left - image_pos.left;
+        var cursor_y = cursor_pos.top - image_pos.top;
+        var cursor_w = $('#cursor').width();
+        var cursor_h = $('#cursor').height();
+        var pos = {x: cursor_x, y: cursor_y, width: cursor_w, height: cursor_h};
+        console.log(pos);
+      }
+      current_file = files.pop();
+      $('#dest_image').attr('src', '');
+      if(!current_file) return;
       var reader = new FileReader();
       reader.onload = function(e) {
         $('#dest_image').attr('src', e.target.result);
       };
-      reader.readAsDataURL(input.files[0]);
-    });
-
-    $('#save_button').click(function() {
-      var cursor_pos = $('#cursor').position();
-      var image_pos = $('#dest_image').position();
-      var cursor_x = cursor_pos.left - image_pos.left;
-      var cursor_y = cursor_pos.top - image_pos.top;
-      var cursor_w = $('#cursor').width();
-      var cursor_h = $('#cursor').height();
-      var pos = {x: cursor_x, y: cursor_y, width: cursor_w, height: cursor_h};
-      console.log(pos);
+      reader.readAsDataURL(current_file);
     });
 
     document.onkeydown = function(e) {
