@@ -1,0 +1,22 @@
+<annotation>
+  <folder>REAL_WORLD</folder>
+  <filename>{{filename}}</filename>
+  <source>
+    <database>REAL WORLD</database>
+    <annotation>REAL WORLD 2018</annotation>
+  </source>
+  <size>
+    <width>{{image_width}}</width>
+    <height>{{image_height}}</height>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>{{class}}</name>
+    <bndbox>
+      <xmin>{{x}}</xmin>
+      <ymin>{{y}}</ymin>
+      <xmax>{{w}}</xmax>
+      <ymax>{{h}}</ymax>
+    </bndbox>
+  </object>
+</annotation>
