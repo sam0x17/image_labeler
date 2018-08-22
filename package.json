@@ -1,7 +1,7 @@
 {
   "name": "image_labeler",
   "version": "1.0.0",
-  "description": "a utility for generating VOX image annotations",
+  "description": "a utility for generating VOC image annotations",
   "main": "image_labeler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,7 +16,7 @@
     "images",
     "labeling",
     "annotations",
-    "vox"
+    "voc"
   ],
   "author": "Sam Johnson",
   "license": "MIT",
