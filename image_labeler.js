@@ -25,7 +25,11 @@ function lead_number(num, size) {
 }
 
 function generate_filename(num) {
-  return "./output/REAL_WORLD_" + lead_number(sample_num, 4) + ".jpg";
+  return "./output/images/REAL_WORLD_" + lead_number(sample_num, 4) + ".jpg";
+}
+
+function annotation_filename(num) {
+  return "./output/annotations/REAL_WORLD_" + lead_number(sample_num, 4) + ".xml";
 }
 
 var sample_num = 0;
@@ -33,6 +37,8 @@ var sample_num = 0;
 function next_file() {
   if(!fs.existsSync('./output')) {
     fs.mkdirSync('./output');
+    fs.mkdirSync('output/images');
+    fs.mkdirSync('output/annotations');
     sample_num = 0;
   } else {
     while(fs.existsSync(generate_filename(sample_num))) {
@@ -56,7 +62,6 @@ app.get('/save', (req, res) => {
   var filename = req.query.filename;
   var src_path = './input/' + filename;
   var dest_path = generate_filename(sample_num);
-  console.log('converting ' + src_path + ' to ' + dest_path);
   sharp(src_path).resize(1000).toFile(dest_path, function(err, info) {
     if(err) throw err;
     var x = parseInt(req.query.x);
@@ -64,7 +69,15 @@ app.get('/save', (req, res) => {
     var w = parseInt(req.query.w);
     var h = parseInt(req.query.h);
     console.log({file: filename, x: x, y: y, w: w, h: h});
-    // TODO: write metadata file
+    var voc = fs.readFileSync('./voc.xml').toString();
+    voc = voc.replace('{{x1}}', x);
+    voc = voc.replace('{{y1}}', y);
+    voc = voc.replace('{{x2}}', w + x);
+    voc = voc.replace('{{y2}}', h + y);
+    voc = voc.replace('{{image_width}}', info.width);
+    voc = voc.replace('{{image_height}}', info.height);
+    voc = voc.replace('{{filename}}', filename);
+    fs.writeFileSync(annotation_filename(sample_num), voc);
     res.status(200).send('OK');
   });
 });

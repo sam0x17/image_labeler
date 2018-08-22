@@ -13,10 +13,10 @@
   <object>
     <name>{{class}}</name>
     <bndbox>
-      <xmin>{{x}}</xmin>
-      <ymin>{{y}}</ymin>
-      <xmax>{{w}}</xmax>
-      <ymax>{{h}}</ymax>
+      <xmin>{{x1}}</xmin>
+      <ymin>{{y1}}</ymin>
+      <xmax>{{x2}}</xmax>
+      <ymax>{{y2}}</ymax>
     </bndbox>
   </object>
 </annotation>
