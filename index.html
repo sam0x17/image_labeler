@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>VOX Image Labeler</title>
+    <title>Image Labeler</title>
     <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -36,6 +36,7 @@
 
     var files = JSON.parse('{{files}}');
     var current_file = null;
+    var klass = null;
 
     $('#next_button').click(function() {
       function next_file() {
@@ -44,6 +45,9 @@
         $('#current_name').html(current_file);
         if(!current_file) return;
         $('#dest_image').attr('src', current_file);
+        setTimeout(function() {
+          klass = window.prompt('Please enter the object class for this sample');
+        }, 1000);
       }
       if(current_file != null) {
         var cursor_pos = $('#cursor').position();
@@ -52,9 +56,9 @@
         var cursor_y = cursor_pos.top - image_pos.top;
         var cursor_w = $('#cursor').width();
         var cursor_h = $('#cursor').height();
-        var pos = {x: cursor_x, y: cursor_y, width: cursor_w, height: cursor_h};
-        console.log(pos);
-        $.get('/save?x='+cursor_x+'&y='+cursor_y+'&w='+cursor_w+'&h='+cursor_h+'&filename='+current_file.replace('./input/', ''), function(data) {
+        var info = {x: cursor_x, y: cursor_y, width: cursor_w, height: cursor_h};
+        console.log(info);
+        $.get('/save?x='+cursor_x+'&y='+cursor_y+'&w='+cursor_w+'&h='+cursor_h+'&filename='+current_file.replace('./input/', '')+'&class='+klass, function(data) {
           if(data != 'OK') {
             console.log('error: ' + data);
             throw 'error with /save endpoint'

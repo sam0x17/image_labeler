@@ -68,7 +68,8 @@ app.get('/save', (req, res) => {
     var y = parseInt(req.query.y);
     var w = parseInt(req.query.w);
     var h = parseInt(req.query.h);
-    console.log({file: filename, x: x, y: y, w: w, h: h});
+    var klass = req.query.class;
+    console.log({file: filename, class: klass, x: x, y: y, w: w, h: h});
     var voc = fs.readFileSync('./voc.xml').toString();
     voc = voc.replace('{{x1}}', x);
     voc = voc.replace('{{y1}}', y);
@@ -77,6 +78,7 @@ app.get('/save', (req, res) => {
     voc = voc.replace('{{image_width}}', info.width);
     voc = voc.replace('{{image_height}}', info.height);
     voc = voc.replace('{{filename}}', filename);
+    voc = voc.replace('{{class}}', klass);
     fs.writeFileSync(annotation_filename(sample_num), voc);
     res.status(200).send('OK');
   });
