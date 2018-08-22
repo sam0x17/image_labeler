@@ -38,6 +38,13 @@
     var current_file = null;
 
     $('#next_button').click(function() {
+      function next_file() {
+        current_file = files.pop();
+        $('#dest_image').attr('src', '');
+        $('#current_name').html(current_file);
+        if(!current_file) return;
+        $('#dest_image').attr('src', current_file);
+      }
       if(current_file != null) {
         var cursor_pos = $('#cursor').position();
         var image_pos = $('#dest_image').position();
@@ -47,12 +54,17 @@
         var cursor_h = $('#cursor').height();
         var pos = {x: cursor_x, y: cursor_y, width: cursor_w, height: cursor_h};
         console.log(pos);
+        $.get('/save?x='+cursor_x+'&y='+cursor_y+'&w='+cursor_w+'&h='+cursor_h+'&filename='+current_file.replace('./input/', ''), function(data) {
+          if(data != 'OK') {
+            console.log('error: ' + data);
+            throw 'error with /save endpoint'
+          }
+          console.log('data saved successfully')
+          next_file();
+        });
+      } else {
+        next_file();
       }
-      current_file = files.pop();
-      $('#dest_image').attr('src', '');
-      $('#current_name').html(current_file);
-      if(!current_file) return;
-      $('#dest_image').attr('src', current_file);
     });
 
     document.onkeydown = function(e) {

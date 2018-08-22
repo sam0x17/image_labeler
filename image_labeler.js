@@ -16,9 +16,9 @@ fs.readdirSync('./input').forEach((filename) => {
 console.log();
 
 function lead_number(num, size) {
-  var st = num + "";
+  var st = num.toString();
   if(st.length > size) throw "bad input / target size must be able to fit input number";
-  while(st.length < num) {
+  while(st.length < size) {
     st = "0" + st;
   }
   return st;
@@ -56,9 +56,14 @@ app.get('/save', (req, res) => {
   var filename = req.query.filename;
   var src_path = './input/' + filename;
   var dest_path = generate_filename(sample_num);
+  console.log('converting ' + src_path + ' to ' + dest_path);
   sharp(src_path).resize(1000).toFile(dest_path, function(err, info) {
     if(err) throw err;
-    if(info) console.log(info)
+    var x = parseInt(req.query.x);
+    var y = parseInt(req.query.y);
+    var w = parseInt(req.query.w);
+    var h = parseInt(req.query.h);
+    console.log({file: filename, x: x, y: y, w: w, h: h});
     // TODO: write metadata file
     res.status(200).send('OK');
   });
